@@ -1,0 +1,45 @@
+# Define the graph as an adjacency list
+graph = {
+    'A': ['B', 'C', 'E'],
+    'B': ['D', 'E', 'A'],
+    'C': ['F', 'G', 'A'],
+    'D': ['B'],
+    'E': ['A', 'B'],
+    'F': ['C'],
+    'G': ['C']
+}
+
+# Function to perform Breadth First Search (BFS)
+def bfs(graph, start, goal):
+    open_list = [start]  # Queue to keep track of nodes to visit
+    closed_list = []     # List to keep track of visited nodes
+
+    print(f"{'Step':<10}{'Open List':<30}{'Closed List'}")
+    step = 0
+
+    while open_list:
+        step += 1
+        current_node = open_list.pop(0)  # Dequeue the first element (FIFO)
+        closed_list.append(current_node)  # Add it to the closed list
+
+        # Print the current state of open and closed lists
+        print(f"{step:<10}{str(open_list):<30}{str(closed_list)}")
+
+        # Check if the goal has been reached
+        if current_node == goal:
+            print("\nGoal reached!")
+            return
+
+        # Add neighbors of the current node to the open list if not already visited
+        for neighbor in graph[current_node]:
+            if neighbor not in closed_list and neighbor not in open_list:
+                open_list.append(neighbor)
+
+    print("\nGoal not found!")
+
+# Define initial and final states
+initial_state = 'A'
+final_state = 'G'
+
+# Call BFS function
+bfs(graph, initial_state, final_state)
